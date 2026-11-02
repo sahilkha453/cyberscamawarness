@@ -553,3 +553,29 @@ textarea:focus {
     margin: 8px 0 12px 0;
     line-height: 1.5;
 }
+/* Mobile Responsive Rules */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 10px !important;
+    }
+
+    .nav-links {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
+    }
+
+    .container, .card, form, table {
+        width: 95% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    input[type="text"], input[type="password"], input[type="email"], textarea, select {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
