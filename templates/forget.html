@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="auth-wrap">
+    <div class="auth-card-pro">
+        <div class="auth-badge">
+            <span class="security-dot"></span> Account Recovery Protocol
+        </div>
+
+        {% if step == 'email' %}
+            <h2>Recover Access</h2>
+            <p class="subtitle">Enter your registered email to receive a 6-digit security OTP</p>
+
+            <form action="{{ url_for('forgot_password') }}" method="POST">
+                <input type="hidden" name="step" value="send_otp">
+                <div class="form-group-pro">
+                    <label for="email">Registered Email ID</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" name="email" placeholder="e.g. 12515262@lpu.in" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Generate Secure OTP &rarr;</button>
+            </form>
+
+        {% elif step == 'verify_otp' %}
+            <h2>Enter 6-Digit OTP</h2>
+            <p class="subtitle">Verification code dispatched to <strong>{{ session.get('reset_email') }}</strong></p>
+
+            <form action="{{ url_for('forgot_password') }}" method="POST">
+                <input type="hidden" name="step" value="check_otp">
+                <div class="form-group-pro">
+                    <label for="otp">Security One-Time Password</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="otp" name="otp" maxlength="6" placeholder="Enter 6-digit OTP" style="text-align: center; letter-spacing: 6px; font-size: 1.4rem;" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Verify Security Token &rarr;</button>
+            </form>
+
+        {% elif step == 'new_password' %}
+            <h2>Reset Master Password</h2>
+            <p class="subtitle">Set a fresh cryptographic credential protected via Argon2id</p>
+
+            <form action="{{ url_for('forgot_password') }}" method="POST">
+                <input type="hidden" name="step" value="update_password">
+                <div class="form-group-pro">
+                    <label for="new_pwd">New Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="new_pwd" name="new_password" placeholder="Min. 6 characters" required>
+                    </div>
+                </div>
+
+                <div class="form-group-pro">
+                    <label for="conf_pwd">Confirm New Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="conf_pwd" name="confirm_password" placeholder="Re-type new password" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Encrypt & Save Password</button>
+            </form>
+        {% endif %}
+
+        <p class="foot-text" style="margin-top: 20px; font-size: 0.85rem; color: #94a3b8; text-align: center;">
+            Remember credentials? <a href="{{ url_for('login') }}" style="color: var(--cyber-cyan);">Return to Login</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

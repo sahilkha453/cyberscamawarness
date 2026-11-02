@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="section-header">
+    <h2>CYBERAWARE // CHECKER</h2>
+    <p>Educational Heuristic Pattern Indicator Tool</p>
+</div>
+
+<div class="checker-container">
+    <form action="{{ url_for('checker') }}" method="POST">
+        <label for="input_text">Paste Suspicious SMS Text, Job Offer, or Web Link:</label>
+        <textarea id="input_text" name="input_text" rows="5" placeholder='e.g., "Dear customer, your electricity power will be disconnected tonight. Update bill immediately: http://bit.ly/pay-bill-alert"'>{{ input_text }}</textarea>
+        <button type="submit" class="btn btn-primary">Analyze Warning Indicators</button>
+    </form>
+
+    {% if results %}
+        <div class="results-box">
+            <div class="risk-badge {{ 'risk-high' if results.risk_level == 'High Warning Risk' else 'risk-low' }}">
+                Status: {{ results.risk_level }}
+            </div>
+
+            {% if results.indicators %}
+                <h4>Heuristic Warning Indicators Detected:</h4>
+                <ul class="indicator-list">
+                    {% for item in results.indicators %}
+                        <li>⚠️ {{ item }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="alert alert-info">
+                    <strong>Notice:</strong> No obvious heuristic warning markers detected from this specific rule-set. Please note: lack of flagged indicators does not certify authentic origin. Never share OTP or PIN numbers.
+                </div>
+            {% endif %}
+            
+            <div class="disclaimer-note">
+                <strong>Educational Notice:</strong> This checker executes rule-based educational pattern matching for instructional purposes. If in doubt, contact official branch portals directly.
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

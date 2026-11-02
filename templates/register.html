@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="auth-wrap">
+    <div class="auth-card-pro">
+        <div class="auth-badge">
+            <span class="security-dot"></span> Argon2id Registration
+        </div>
+
+        <h2>Register Participant</h2>
+        <p class="subtitle">Create student or evaluative access credential</p>
+
+        <form action="{{ url_for('register') }}" method="POST" id="regForm" onsubmit="return validateRegisterForm()">
+            <div class="form-group-pro">
+                <label for="name">Full Name</label>
+                <div class="input-wrapper">
+                    <input type="text" id="name" name="name" placeholder="e.g. Shahil" required>
+                </div>
+            </div>
+
+            <div class="form-group-pro">
+                <label for="reg_email">Email Address</label>
+                <div class="input-wrapper">
+                    <input type="email" id="reg_email" name="email" placeholder="e.g. yourname@lpu.in" required>
+                </div>
+            </div>
+
+            <div class="form-group-pro">
+                <label for="reg_password">Create Master Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="reg_password" name="password" placeholder="Min. 8 chars, 1 number, 1 special char" oninput="checkStrength(this.value)" required>
+                    <button type="button" class="toggle-eye" onclick="togglePassword('reg_password', this)">👁️</button>
+                </div>
+                <div class="strength-meter">
+                    <div id="strength-bar" class="strength-bar"></div>
+                </div>
+                <span id="strength-text" class="strength-text">Password Strength: Empty</span>
+            </div>
+
+            <div class="form-group-pro">
+                <label for="confirm_password">Confirm Master Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-type password" oninput="verifyMatch()" required>
+                    <button type="button" class="toggle-eye" onclick="togglePassword('confirm_password', this)">👁️</button>
+                </div>
+                <span id="match-status" class="status-msg"></span>
+            </div>
+
+            <div class="terms-row">
+                <label>
+                    <input type="checkbox" required> I understand this educational platform outputs rule-based indicator alerts only.
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Complete Registration</button>
+        </form>
+
+        <p class="foot-text">
+            Already registered? <a href="{{ url_for('login') }}">Sign In to Platform</a>
+        </p>
+    </div>
+</div>
+
+<script>
+function togglePassword(fieldId, btn) {
+    const input = document.getElementById(fieldId);
+    if (input.type === "password") {
+        input.type = "text";
+        btn.textContent = "🙈";
+    } else {
+        input.type = "password";
+        btn.textContent = "👁️";
+    }
+}
+
+function checkStrength(pwd) {
+    const bar = document.getElementById('strength-bar');
+    const text = document.getElementById('strength-text');
+    let strength = 0;
+
+    if (pwd.length >= 8) strength++;
+    if (/[A-Z]/.test(pwd)) strength++;
+    if (/[0-9]/.test(pwd)) strength++;
+    if (/[^A-Za-z0-9]/.test(pwd)) strength++;
+
+    bar.className = 'strength-bar';
+    if (pwd.length === 0) {
+        bar.style.width = '0%';
+        text.textContent = 'Password Strength: Empty';
+        text.style.color = '#9ca3af';
+    } else if (strength <= 1) {
+        bar.style.width = '25%';
+        bar.classList.add('str-weak');
+        text.textContent = 'Strength: Weak (Too vulnerable)';
+        text.style.color = '#ef4444';
+    } else if (strength === 2 || strength === 3) {
+        bar.style.width = '65%';
+        bar.classList.add('str-medium');
+        text.textContent = 'Strength: Moderate (Good)';
+        text.style.color = '#f59e0b';
+    } else {
+        bar.style.width = '100%';
+        bar.classList.add('str-strong');
+        text.textContent = 'Strength: Strong (Argon2 Optimal)';
+        text.style.color = '#10b981';
+    }
+    verifyMatch();
+}
+
+function verifyMatch() {
+    const p1 = document.getElementById('reg_password').value;
+    const p2 = document.getElementById('confirm_password').value;
+    const status = document.getElementById('match-status');
+
+    if (!p2) {
+        status.textContent = '';
+        return;
+    }
+    if (p1 === p2) {
+        status.textContent = '✓ Passwords match successfully';
+        status.style.color = '#10b981';
+    } else {
+        status.textContent = '✗ Passwords do not match';
+        status.style.color = '#ef4444';
+    }
+}
+
+function validateRegisterForm() {
+    const p1 = document.getElementById('reg_password').value;
+    const p2 = document.getElementById('confirm_password').value;
+    if (p1 !== p2) {
+        alert("Password confirmation does not match. Please recheck.");
+        return false;
+    }
+    return true;
+}
+</script>
+{% endblock %}

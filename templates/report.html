@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="report-alert-card">
+    <h2 class="alert-title">🚨 DEFRAUDED? IMMEDIATE ACTION REQUIRED</h2>
+    <div class="emergency-callout">
+        <div class="helpline-badge">NATIONAL HELPLINE</div>
+        <div class="helpline-number">DIAL 1930</div>
+        <p class="helpline-subtext">National Cyber Financial Crime Reporting Portal // <strong>Golden Hour Response for Instant Bank Freezing</strong></p>
+    </div>
+</div>
+
+<div class="checklist-card">
+    <h3>📋 Evidence Checklist Before Lodging a Complaint</h3>
+    <ul class="checklist-grid">
+        <li><span>✔️</span> Bank Transaction UTR / Reference ID</li>
+        <li><span>✔️</span> Chat / WhatsApp / SMS Unedited Screenshots</li>
+        <li><span>✔️</span> Beneficiary Account / Suspect UPI ID</li>
+        <li><span>✔️</span> Suspect Caller Phone Number / Email Address</li>
+        <li><span>✔️</span> Copy of Bank Account Debit SMS Notice</li>
+        <li><span>✔️</span> Timestamp and Date of Unsolicited Message</li>
+    </ul>
+</div>
+
+<div class="directory-section">
+    <h3 style="margin: 30px 0 15px 0; color: var(--cyber-cyan); letter-spacing: 1px;">🌐 Official Central Citizen Portals</h3>
+    <div class="dir-grid">
+        {% for guide in guides %}
+        <div class="dir-card">
+            <h4>{{ guide.title }}</h4>
+            <p class="dir-contact">
+                Emergency Contact: 
+                <span class="highlight-red">{{ guide.helpline_number }}</span>
+            </p>
+            <p class="dir-desc">{{ guide.steps }}</p>
+            <a href="{{ guide.official_url }}" target="_blank" class="cyber-portal-btn">
+                Visit Official Portal <span class="arrow">&rarr;</span>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

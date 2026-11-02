@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="section-header">
+    <h2>Educational Awareness Modules & Real-World Frauds</h2>
+    <p>Curated from BCA CA-2 Curriculum & National Cybercrime Advisories</p>
+</div>
+
+<div class="lifecycle-container">
+    <h3>How Online Scammers Trap Victims (4-Stage Anatomy)</h3>
+    <div class="steps-grid">
+        <div class="step-card">
+            <span class="step-num">Step 1</span>
+            <h4>Initial Contact</h4>
+            <p>Unsolicited SMS, WhatsApp, automated call, or email posing as official bank/utility authority.</p>
+        </div>
+        <div class="step-card">
+            <span class="step-num">Step 2</span>
+            <h4>Creating Panic</h4>
+            <p>Fake threats claiming your bank account, electricity connection, or SIM card will be blocked instantly.</p>
+        </div>
+        <div class="step-card">
+            <span class="step-num">Step 3</span>
+            <h4>Pressure & Trick</h4>
+            <p>Forcing hurried action to share 6-digit OTP, enter UPI PIN, or transfer funds to a fake "safe" account.</p>
+        </div>
+        <div class="step-card">
+            <span class="step-num">Step 4</span>
+            <h4>Financial Loss</h4>
+            <p>Victim shares credentials, resulting in unauthorized debit of savings and personal data compromise.</p>
+        </div>
+    </div>
+</div>
+
+<div class="modules-grid">
+    {% for mod in modules %}
+    <div class="topic-card">
+        <span class="topic-category">{{ mod.category }}</span>
+        <h3>{{ mod.title }}</h3>
+        <p class="topic-summary">{{ mod.description }}</p>
+        
+        <div class="guidance-box warning-cues">
+            <strong>⚠️ Common Red Flags:</strong>
+            <p>{{ mod.red_flags }}</p>
+        </div>
+
+        <div class="guidance-box dos">
+            <strong>✅ Safe Action (DO):</strong>
+            <p>{{ mod.dos }}</p>
+        </div>
+
+        <div class="guidance-box donts">
+            <strong>❌ Trap to Avoid (DON'T):</strong>
+            <p>{{ mod.donts }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

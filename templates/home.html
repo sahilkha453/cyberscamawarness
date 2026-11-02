@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero-section">
+    <h1>Stay Ahead of Digital Deception</h1>
+    <p class="hero-subtext">Learn to identify deceptive SMS text, spoofed payment requests, fake job scams, and predatory links through educational pattern evaluation.</p>
+    
+    <div class="hero-actions">
+        <a href="{{ url_for('checker') }}" class="btn btn-primary">Launch Scam Checker</a>
+        <a href="{{ url_for('learn') }}" class="btn btn-secondary">Explore Safety Guides</a>
+    </div>
+</section>
+
+<section class="card-grid">
+    <div class="info-card">
+        <h3>Emergency Helpline</h3>
+        <p>Immediate bank freeze assistance and financial crime intercept reporting.</p>
+        <span class="badge">Dial 1930</span>
+    </div>
+    <div class="info-card">
+        <h3>Official Incident Portal</h3>
+        <p>Centralized citizen incident reporting operated by Ministry of Home Affairs.</p>
+        <a href="https://cybercrime.gov.in" target="_blank" class="text-link">cybercrime.gov.in &rarr;</a>
+    </div>
+    <div class="info-card">
+        <h3>Argon2 Security Standard</h3>
+        <p>Built with memory-hard cryptographic key derivation to protect registered records.</p>
+        <span class="badge badge-green">Argon2id Active</span>
+    </div>
+</section>
+{% endblock %}
